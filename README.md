@@ -39,3 +39,23 @@ cd frontend
 npm install
 npm run dev 
 ```
+
+## Backend Development
+
+## Requirements
+- Python 3.11+
+
+
+## Setup
+1. Navigate to the Backend Directory
+2. Create a Python virtual environment
+3. Activate the virtual environment
+4. Install dependencies
+5. Start the FastAPI development server
+
+### Available Endpoints
+- GET /health - Application Health Check
+- GET /welcome - Welcome Message
+
+### Testing
+Run the automated backend tests using pytest
