@@ -1,4 +1,4 @@
-## ai-fitness-coach
+# ai-fitness-coach
 AI-powered fitness planning and workout tracking web application
 
 # Problem Statement
@@ -9,6 +9,9 @@ recommendations based on user goals, performance, and feedback
 
 - AI Assistance
 - AI personalized workout plans
+- Authentication
+- Workout Tracking
+- Progress Visualization
 
 # Tech Stack
 - Frontend: React + Typescript
