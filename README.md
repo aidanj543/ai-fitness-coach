@@ -34,8 +34,7 @@ Requirements:
 
 Commands:
 
-```
-bash
+```bash
 cd frontend
 npm install
 npm run dev 
