@@ -18,3 +18,23 @@ recommendations based on user goals, performance, and feedback
 - Backend: FastAPI + Python
 - Database: PostgreSQL
 - AI Integration: OpenAI
+
+## Local Development
+
+### Frontend
+
+Requirements:
+- Node.js
+- npm
+
+1. Clone the Repository
+2. Navigate into the frontend directory
+3. Install Dependencies
+4. Start the Development Server
+
+Commands:
+
+```bash
+cd frontend
+npm install
+npm run dev ```
