@@ -59,3 +59,7 @@ npm run dev
 
 ### Testing
 Run the automated backend tests using pytest
+
+## Development Workflow
+This project uses GitHub Actions for continuous integration.
+All changes to Main require a pull request and passing CI checks.
