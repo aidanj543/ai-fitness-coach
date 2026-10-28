@@ -18,7 +18,9 @@ def main():
         with engine.connect() as connection:
             result = connection.execute(text("SELECT current_user, current_database()"))
             print("Database connection successful!")
-            print("Test result:", result.scalar_one())
+            row = result.one()
+            print("Test result:", row[0])
+            print("Test result:", row[1])
     finally:
         engine.dispose()
 
