@@ -24,7 +24,7 @@ class PlannedExercise(Base):
 
     workout_plan_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True),
-        ForeignKey("workout_plans.id"),
+        ForeignKey("workout_plans.id", ondelete="CASCADE"),
         nullable=False
     )
 
