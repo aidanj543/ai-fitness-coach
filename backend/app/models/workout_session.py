@@ -11,6 +11,7 @@ from app.models.base import Base
 if TYPE_CHECKING:
     from app.models.user import User
     from app.models.workout_plan import WorkoutPlan
+    from app.models.exercise_log import ExerciseLog
 
 class WorkoutSession(Base):
     __tablename__ = "workout_sessions"
@@ -57,6 +58,10 @@ class WorkoutSession(Base):
 
     workout_plan: Mapped["WorkoutPlan | None"] = relationship(
         back_populates="workout_sessions"
+    )
+
+    exercise_logs: Mapped[list["ExerciseLog"]] = relationship(
+        back_populates="workout_session"
     )
 
     __table_args__ = (
