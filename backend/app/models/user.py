@@ -9,8 +9,11 @@ from typing import TYPE_CHECKING
 
 from app.models.base import Base
 
+
 if TYPE_CHECKING:
     from app.models.fitness_profile import FitnessProfile
+    from app.models.workout_plan import WorkoutPlan
+
 
 class User(Base):
     __tablename__ = "users"
@@ -41,4 +44,8 @@ class User(Base):
     fitness_profile: Mapped["FitnessProfile | None"] = relationship(
         back_populates = "user",
         uselist = False
+    )
+
+    workout_plans: Mapped[list["WorkoutPlan"]] = relationship(
+        back_populates = "user"
     )
