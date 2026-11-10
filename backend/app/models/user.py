@@ -13,6 +13,7 @@ from app.models.base import Base
 if TYPE_CHECKING:
     from app.models.fitness_profile import FitnessProfile
     from app.models.workout_plan import WorkoutPlan
+    from app.models.workout_session import WorkoutSession
 
 
 class User(Base):
@@ -48,4 +49,8 @@ class User(Base):
 
     workout_plans: Mapped[list["WorkoutPlan"]] = relationship(
         back_populates = "user"
+    )
+
+    workout_sessions: Mapped["WorkoutSession"] = relationship(
+        back_populates="user"
     )
