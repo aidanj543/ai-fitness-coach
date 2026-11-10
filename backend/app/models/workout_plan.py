@@ -10,6 +10,7 @@ from app.models.base import Base
 
 if TYPE_CHECKING:
     from app.models.user import User
+    from app.models.planned_exercise import PlannedExercise
 
 
 class WorkoutPlan(Base):
@@ -46,4 +47,8 @@ class WorkoutPlan(Base):
 
     user: Mapped["User"] = relationship(
         back_populates="workout_plans"
+    )
+
+    planned_exercises: Mapped[list["PlannedExercise"]] = relationship(
+        back_populates="workout_plan"
     )
