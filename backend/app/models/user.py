@@ -51,6 +51,6 @@ class User(Base):
         back_populates = "user"
     )
 
-    workout_sessions: Mapped["WorkoutSession"] = relationship(
+    workout_sessions: Mapped[list["WorkoutSession"]] = relationship(
         back_populates="user"
     )
