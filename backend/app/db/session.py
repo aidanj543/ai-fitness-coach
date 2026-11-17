@@ -8,14 +8,14 @@ from sqlalchemy.orm import Session, sessionmaker
 
 load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
-database_url = os.getenv("DATABASE_URL")
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-if not database_url:
+if not DATABASE_URL:
     raise RuntimeError("DATABASE_URL is missing")
 
 
 engine = create_engine(
-    database_url,
+    DATABASE_URL,
     pool_pre_ping=True
 )
 
