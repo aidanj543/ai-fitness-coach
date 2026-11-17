@@ -3,9 +3,7 @@ from pwdlib import PasswordHash
 password_hash = PasswordHash.recommended()
 
 def hash_password(plain_password: str) -> str:
-    # TODO: Hash the password and return the hash
-    pass
+    return password_hash.hash(plain_password)
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    #TODO: Verify whether the password matches the hash
-    pass
+    return password_hash.verify(plain_password, hashed_password)
