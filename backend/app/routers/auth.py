@@ -22,6 +22,9 @@ from sqlalchemy.orm import Session
 from app.db.session import get_db
 from app.models.user import User
 
+DUMMY_PASSWORD_HASH = hash_password(
+    "ThisIsADummyPasswordUsedForTimingOnly!"
+)
 
 router = APIRouter(
     prefix="/auth",
@@ -85,4 +88,38 @@ def register_user(
     db.refresh(user)
     return user
 
+
+@router.post(
+    "/login",
+    response_model=TokenResponse,
+    status_code=status.HTTP_200_OK,
+)
+def login_user(
+    payload: UserLogin,
+    db: Annotated[Session, Depends(get_db)]
+):
+    email = str(payload.email).strip().lower()
+
+    user = db.scalar(select(User).where(User.email == email))
+
+    password_hash = (
+    user.password_hash if user is not None
+    else DUMMY_PASSWORD_HASH
+    )
+
+    password_is_valid = verify_password(
+    payload.password,
+    password_hash,
+    )
+
+    if not password_is_valid:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid email or password",
+            headers={"WWW-Authentication": "Bearer"}
+        )
+
+    access_token = create_access_token(user_id=str(user.id))
+
+    return TokenResponse(access_token=access_token)
 
