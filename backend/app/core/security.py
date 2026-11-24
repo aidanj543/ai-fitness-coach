@@ -15,15 +15,20 @@ JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 JWT_ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
 
-if (
-    not JWT_SECRET_KEY
-    or len(JWT_SECRET_KEY.strip().encode("utf-8")) < 32
-    or JWT_SECRET_KEY.strip() == "replace_with_random_64_character_hex_secret"
-):
-    raise ValueError("JWT_SECRET_KEY must be set to a secret of at least 32 bytes")
+if not JWT_SECRET_KEY:
+    raise RuntimeError("JWT_SECRET_KEY is missing")
+
+try:
+    secret_bytes = bytes.fromhex(JWT_SECRET_KEY)
+except ValueError as exc:
+    raise RuntimeError("JWT_SECRET_KEY must be hexadecimal") from exc
+
+if len(secret_bytes) != 32:
+    raise RuntimeError("JWT_SECRET_KEY must represent 32 bytes")
 
 if ACCESS_TOKEN_EXPIRE_MINUTES <= 0:
-    raise ValueError("ACCESS_TOKEN_EXPIRE_MINUTES must be positive")
+    raise RuntimeError("Token expiration must be positive")
+
 
 def create_access_token(user_id:str) -> str:
 
@@ -37,12 +42,12 @@ def create_access_token(user_id:str) -> str:
         "type": "access"
     }
 
-    return jwt.encode(payload)
+    return jwt.encode(payload, JWT_SECRET_KEY, algorithm="HS256")
 
 def decode_access_token(token: str)->str:
 
     payload = jwt.decode(
-        token, JWT_SECRET_KEY, algorithms=["HS256"], options={"require": ["exp"]}
+        token, JWT_SECRET_KEY, algorithms=["HS256"], options={"require": ["sub", "exp"]}
     )
 
     if payload.get("type") != "access":
