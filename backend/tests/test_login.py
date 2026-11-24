@@ -125,3 +125,21 @@ def test_login_response(client_and_session):
     assert set(data) == {"access_token", "token_type"}
     assert data["token_type"] == "bearer"
     assert decode_access_token(data["access_token"]) == registration.json()["id"]
+
+
+def test_nonexistent_user_with_dummy_password(client_and_session):
+    client, _ = client_and_session
+
+    response = client.post(
+        "/auth/login",
+        json={
+            "email": "missing-dummy-test@example.com",
+            "password": "ThisIsADummyPasswordUsedForTimingOnly!",
+        },
+    )
+
+    assert response.status_code == 401
+    assert response.json() == {
+        "detail": "Invalid email or password"
+    }
+    assert response.headers["www-authenticate"] == "Bearer"

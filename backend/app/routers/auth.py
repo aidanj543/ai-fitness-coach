@@ -112,12 +112,12 @@ def login_user(
     password_hash,
     )
 
-    if not password_is_valid:
+    if user is None or not password_is_valid:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid email or password",
-            headers={"WWW-Authentication": "Bearer"}
-        )
+            headers={"WWW-Authenticate": "Bearer"},
+    )
 
     access_token = create_access_token(user_id=str(user.id))
 
